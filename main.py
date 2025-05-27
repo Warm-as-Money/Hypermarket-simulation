@@ -36,11 +36,42 @@ def save_user(user):
     with open(f"{user.name}.json", "w") as f:
         json.dump(data, f)
 
+def type_print(text, delay=0.05):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    print()
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def welcome_animation():
+    clear()
+    print("\n" * 3)
+    type_print("🛒 WELCOME TO THE", 0.1)
+    time.sleep(0.3)
+    type_print("💰 HYPERMARKET SIMULATOR 💰", 0.08)
+    time.sleep(0.5)
+
+    loading_text = "Loading"
+    for x in range(3):
+        sys.stdout.write(loading_text + "." * (x + 1) + " \r")
+        sys.stdout.flush()
+        time.sleep(0.5)
+    print("\n")
+
+    type_print("Get ready to build your empire......\n", 0.07)
+    time.sleep(0.5)
+    type_print("🚀 Launching simulation......", 0.07)
+    time.sleep(1)
+    clear()
+
 if __name__ == "__main__":
     name = input("Enter your username: ")
     user = load_user(name)
     if user is None:
-        print("Welcome to the Hypermarket Simulation!")
+        welcome_animation()
         wallet = {}
         assets = {}
         balance = 1000
