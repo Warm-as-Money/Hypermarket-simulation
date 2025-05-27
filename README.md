@@ -1,2 +1,0 @@
-# Hypermarket-simulation
-# Hypermarket-simulation
