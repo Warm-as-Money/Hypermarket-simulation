@@ -4,8 +4,9 @@ import time
 import sys
 
 class User:
-    def __init__(self, name, wallet, assets, balance):
+    def __init__(self, name, user_password, wallet, assets, balance):
         self.name = name
+        self.password = user_password
         self.wallet = wallet
         self.assets = assets
         self.balance = balance
@@ -17,8 +18,8 @@ def type_print(text, delay=0.5):
         time.sleep(delay)
     print()
 
-def load_user(name):
-    filename = f"{name}.json"
+def load_user(name, password):
+    filename = f"{name}-{password}.json"
     if os.path.exists(filename):
         with open(filename, "r") as f:
             data = json.load(f)
@@ -29,11 +30,12 @@ def load_user(name):
 def save_user(user):
     data = {
         "name": user.name,
+        "password": user.password,
         "wallet": user.wallet,
         "assets": user.assets,
         "balance": user.balance,
     }
-    with open(f"{user.name}.json", "w") as f:
+    with open(f"{user.name}-{user.password}.json", "w") as f:
         json.dump(data, f)
 
 def type_print(text, delay=0.05):
@@ -69,13 +71,14 @@ def welcome_animation():
 
 if __name__ == "__main__":
     name = input("Enter your username: ")
-    user = load_user(name)
+    password = input(f"Please enter the password for user {name}: ")
+    user = load_user(name, password)
     if user is None:
         welcome_animation()
         wallet = {}
         assets = {}
         balance = 1000
-        user = User(name, wallet, assets, balance)
+        user = User(name, password, wallet, assets, balance)
         save_user(user)
     else:
         print(f"Welcome back, {user.name}!")
